@@ -7,22 +7,26 @@ A simple command-line To-Do List application built with Python. This project is 
 ### ✅ Completed
 
 - Add a new task
+- View task by ID
+- View all tasks
+- Search tasks by title
+- Filter tasks by priority
+- Filter tasks by status
 - Auto-generated task ID
 - Input validation
 - Due date validation (YYYY-MM-DD)
 - Priority selection
 - Default task status
-- Display task details after creation
+- Display task details
+- Display tasks in a formatted table
 
 ### 🚧 Planned
 
-- View all tasks
 - Update a task
 - Delete a task
-- Mark task as completed
-- Search tasks
-- Filter tasks
+- Mark a task as completed
 - Save tasks to JSON
+- Task statistics
 
 ## Technologies
 
