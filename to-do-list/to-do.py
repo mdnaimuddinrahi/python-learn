@@ -1,4 +1,5 @@
 from datetime import date, datetime
+import json
 
 PRIORITY_HIGH, PRIORITY_MEDIUM, PRIORITY_LOW = 1, 2, 3  
 PRIORITIES = {
@@ -6,17 +7,22 @@ PRIORITIES = {
     PRIORITY_MEDIUM: "Medium",
     PRIORITY_LOW: "Low",
 }
+
 STATUS_PENDING, STATUS_IN_PROGRESS, STATUS_COMPLETE, STATUS_CANCEL = 1, 2, 3, 4
+
 STATUSES = {
     STATUS_PENDING: "Pending",
     STATUS_IN_PROGRESS: "In Progress",
     STATUS_COMPLETE: "Completed",
     STATUS_CANCEL: "Cancelled",
 }
-MENU_ADD, MENU_VIEW, MENU_LIST, MENU_UPDATE, MENU_DELETE, MENU_EXIT = 1, 2, 3, 4, 5, 9
+
+MENU_ADD, MENU_VIEW, MENU_LIST, MENU_UPDATE, MENU_DELETE, MENU_STATUS, MENU_EXPORT, MENU_EXIT = 1, 2, 3, 4, 5, 6, 7, 9
+
 NO_TASK_AVAILABLE_MESSAGE = "No Tasks available yet."
 WRONG_INPUT_TRY_AGAIN_MESSAGE = "Wrong input, please try again."
 INVALID_OPTION_ERROR_MESSAGE = "Invalid option. Please try again."
+
 def print_divider(divided_by:int = 30)->None:
     print("-" * divided_by)
 
@@ -241,6 +247,28 @@ def delete_task(tasks: list[dict[str, object]])->None:
         print_divider()
         print()
 
+def task_status(tasks: list[dict[str, object]])->None:
+    task = find_task_by_id(tasks)
+    if task is None: return
+    print_divider()
+    display_task(task)
+    print_divider()
+    status = choose_option(STATUSES, 'Status')
+    task['status'] = status
+    print()
+    print('Status Updated Successfully:')
+    print_divider()
+    display_task(task)
+    print_divider()
+
+def export_task(tasks: list[dict[str, object]])->None:
+    if not has_tasks(tasks): return
+    with open("tasks.json", "w") as file:
+        json.dump(tasks, file)
+    print_divider()
+    print("File Exported Successfully as task.json file, Please check.")
+    print()
+
 def main()->None:
     tasks = []
     task_next_id = 1
@@ -255,7 +283,8 @@ def main()->None:
 3. Task List.
 4. Update task.
 5. Delete task.
-6. Complete task.
+6. Task Status.
+7. Export Tasks as JSON.
 9. Exit.
             ''')
 
@@ -271,6 +300,10 @@ def main()->None:
                 update_task(tasks)
             elif choice == MENU_DELETE:
                 delete_task(tasks)
+            elif choice == MENU_STATUS:
+                task_status(tasks)
+            elif choice == MENU_EXPORT:
+                export_task(tasks)
             elif choice == MENU_EXIT:
                 print("Good Bye, Hope to see you soon!")
                 break
