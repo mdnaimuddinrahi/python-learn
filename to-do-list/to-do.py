@@ -13,12 +13,14 @@ STATUSES = {
     STATUS_COMPLETE: "Completed",
     STATUS_CANCEL: "Cancelled",
 }
-MENU_ADD, MENU_VIEW, MENU_LIST, MENU_EXIT = 1, 2, 3, 9
-
+MENU_ADD, MENU_VIEW, MENU_LIST, MENU_UPDATE, MENU_DELETE, MENU_EXIT = 1, 2, 3, 4, 5, 9
+NO_TASK_AVAILABLE_MESSAGE = "No Tasks available yet."
+WRONG_INPUT_TRY_AGAIN_MESSAGE = "Wrong input, please try again."
+INVALID_OPTION_ERROR_MESSAGE = "Invalid option. Please try again."
 def print_divider(divided_by:int = 30)->None:
     print("-" * divided_by)
 
-def choose_option(options: dict, label: str)->int:
+def choose_option(options: dict[str, object], label: str)->int:
     print(f"Choose {label}")
     print_divider()
     for key, value in options.items():
@@ -39,6 +41,17 @@ def valid_input(placeholder: str = '', name: str = '')->str:
             return value
         print(f"{name} can't be empty. Please try again.")
 
+def confirm_input(placeholder: str = '', name: str = '')->str:
+    while True:
+        value = input(placeholder).strip().lower()
+
+        if value in ("y", "n"):
+            return value
+        elif value == '':
+            print(f"{name} can't be empty. Please try again.")
+        else:
+            print('Wrong Input, please try again.')
+       
 def valid_date(placeholder: str = '', name: str = '')->str:
     while True:
         value = input(placeholder).strip()
@@ -51,7 +64,7 @@ def valid_date(placeholder: str = '', name: str = '')->str:
         except ValueError:
             print(f"Invalid date format. Please use YYYY-MM-DD (e.g. {date.today().isoformat()}).")
 
-def add_task(tasks: list, next_task_id: int)->int: 
+def add_task(tasks: list[dict[str, object]], next_task_id: int)->int: 
     print('Please enter task details.')
     title = valid_input('Input title: ', "Title")
     description = valid_input('Input description: ', "Description")
@@ -73,7 +86,7 @@ def add_task(tasks: list, next_task_id: int)->int:
 
     return next_task_id + 1
 
-def display_task(task)->None:
+def display_task(task:dict[str, object])->None:
     print(f"ID          : {task['id']}")
     print(f"Title       : {task['title']}")
     print(f"Description : {task['description']}")
@@ -82,33 +95,35 @@ def display_task(task)->None:
     print(f"Due Date    : {task['due_date']}")
     print(f"Created At  : {task['created_at']}")
 
-def find_task_by_id(tasks:list[dict])->int|None:
-    if not tasks:
-        print("No Tasks available yet.")
-        return
+def find_task_by_id(tasks:list[dict[str, object]])->dict[str, object]|None:
+    if not has_tasks(tasks): return None
+
     try:
         task_id = int(input("Enter the task id: "))
         index = next((i for i, item in enumerate(tasks) if item.get("id") == task_id), None)
+        if index is None:
+            print('Task Not found.')
+            return None
     except ValueError:
-        print("Wrong input, please try again.")
+        print(WRONG_INPUT_TRY_AGAIN_MESSAGE)
         return None
 
-    return index
+    return tasks[index]
 
-def view_task(tasks:list[dict])->None:
-    task_index = find_task_by_id(tasks)
-
-    if task_index is None:
-        print('Task Not found.')
-
-        return
+def view_task(tasks:list[dict[str, object]])->None:
+    task= find_task_by_id(tasks)
+    if task is None: return
     print_divider()
-    display_task(tasks[task_index])
+    display_task(task)
 
-def task_list(tasks:list[dict])->None:
+def has_tasks(tasks: list[dict[str, object]]) -> bool:
     if not tasks:
-        print("No Tasks available yet.")
-        return
+        print(NO_TASK_AVAILABLE_MESSAGE)
+        return False
+    return True
+
+def task_list(tasks:list[dict[str, object]])->None:
+    if not has_tasks(tasks): return
     print("To-do task list:")
     while True:
         try:
@@ -143,17 +158,17 @@ def task_list(tasks:list[dict])->None:
             elif filter_by == 5:
                 break
             else:
-                print("Input invalided option, please try again.")
+                print(INVALID_OPTION_ERROR_MESSAGE)
 
             display_tasks_table(filtered_tasks)
         except ValueError:
-            print("Wrong Input, Please try again.")
+            print(WRONG_INPUT_TRY_AGAIN_MESSAGE)
 
-def display_tasks_table(tasks: list[dict]) -> None:
+def display_tasks_table(tasks: list[dict[str, object]]) -> None:
     if not tasks:
         print("No records found.")
         return
-    print('\n')
+    print()
     # Header
     header = f"{'ID':<4} {'Title':<20} {'Priority':<10} {'Status':<12} {'Due Date':<12}"
     print_divider(len(header))
@@ -173,7 +188,58 @@ def display_tasks_table(tasks: list[dict]) -> None:
         print(row)
 
     print_divider(len(header))
-    print('\n')
+    print()
+
+def update_task(tasks: list[dict[str, object]])->None:
+    task = find_task_by_id(tasks)
+    if task is None: return
+    print_divider()
+    display_task(task)
+    print_divider()
+
+    is_title = confirm_input('Do you want to update title?[y/n]: ', 'Title')
+
+    if is_title == 'y':
+        title = valid_input('Enter Title: ', 'Title')
+        task['title'] = title
+
+    is_description = confirm_input('Do you want to update description?[y/n]: ', 'Description')
+
+    if is_description == 'y':
+        description = valid_input('Enter Description: ', 'Description')
+        task['description'] = description
+
+    is_priority = confirm_input('Do you want to update priority?[y/n]: ', 'Priority')
+
+    if is_priority == 'y':
+        priority = choose_option(PRIORITIES, 'Priority')
+        task['priority'] = priority
+
+    is_due_date =  confirm_input('Do you want to update due date?[y/n]: ', 'Due Date')
+
+    if is_due_date == 'y':
+            due_date = valid_date('Enter Due Date: ', 'Due Date')
+            task['due_date'] = due_date
+
+    print()
+    print('Updated Task Details:')
+    print_divider()
+    display_task(task)
+    print_divider()
+
+def delete_task(tasks: list[dict[str, object]])->None:
+    task = find_task_by_id(tasks)
+    if task is None: return
+    delete_confirm =  confirm_input('Are you sure you want to delete this task? (y/n): ', 'Delete Confirmation')
+    if delete_confirm == 'y':
+        # removed_task = tasks.pop(task)
+        tasks.remove(task)
+        print('Task deleted successfully.')
+        print('Removed task details: ')
+        print_divider()
+        display_task(task)
+        print_divider()
+        print()
 
 def main()->None:
     tasks = []
@@ -182,7 +248,7 @@ def main()->None:
     print_divider()
     while True:
         try:
-            print('\n')
+            print()
             print('''============ To do list ============
 1. Add task.
 2. View task.
@@ -192,6 +258,7 @@ def main()->None:
 6. Complete task.
 9. Exit.
             ''')
+
             choice = int(input('Choose an option: '))
 
             if choice == MENU_ADD:
@@ -200,11 +267,15 @@ def main()->None:
                 view_task(tasks)
             elif choice == MENU_LIST:
                 task_list(tasks)
+            elif choice == MENU_UPDATE:
+                update_task(tasks)
+            elif choice == MENU_DELETE:
+                delete_task(tasks)
             elif choice == MENU_EXIT:
                 print("Good Bye, Hope to see you soon!")
                 break
             else:
-                print("Input invalided option, please try again.")
+                print(INVALID_OPTION_ERROR_MESSAGE)
         except ValueError:
             print("Invalid input, Please enter a number.")
 
