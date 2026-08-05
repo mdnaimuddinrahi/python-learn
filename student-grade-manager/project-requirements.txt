@@ -1,0 +1,96 @@
+Student Grade Manager
+=====================
+
+Project Goal
+------------
+Build a command-line Student Grade Management System using Python that allows users to manage student records, calculate academic results, and persist data using JSON storage.
+
+Core Requirements
+-----------------
+
+Student Management
+- Add a new student.
+- Assign a unique ID to each student.
+- View all students.
+- Search for a student by ID.
+- Update student information.
+- Delete a student.
+
+Marks Management
+----------------
+- Store marks for multiple subjects.
+- Allow editing subject marks.
+- Validate that marks are between 0 and 100.
+
+Result Calculation
+------------------
+- Calculate total marks.
+- Calculate average marks.
+- Calculate GPA.
+- Assign letter grades based on GPA or average.
+- Determine pass/fail status.
+
+Reports
+-------
+- Display an individual student's report.
+- Display all student reports.
+- Generate class ranking.
+- Show class statistics:
+  - Highest score
+  - Lowest score
+  - Class average
+  - Total number of students
+
+Data Storage
+------------
+- Save all student data to a JSON file.
+- Load existing data automatically when the application starts.
+- Create the data file if it does not exist.
+
+Validation
+----------
+- Validate all user input.
+- Prevent duplicate student IDs.
+- Ensure marks are numeric.
+- Ensure marks remain within the allowed range.
+- Handle invalid menu selections gracefully.
+
+Application Structure
+---------------------
+Organize the project into multiple modules.
+
+- main.py
+  Application entry point and menu system.
+
+- students.py
+  Student CRUD operations.
+
+- reports.py
+  Grade calculation and reporting.
+
+- storage.py
+  JSON read/write operations.
+
+- utils.py
+  Input validation and helper functions.
+
+- constants.py
+  Menus, grade boundaries, and reusable constants.
+
+Technical Requirements
+----------------------
+- Use Python functions.
+- Use lists and dictionaries.
+- Use loops and conditional statements.
+- Separate business logic into modules.
+- Keep code readable and reusable.
+- Follow consistent naming conventions.
+
+Bonus Features (Optional)
+-------------------------
+- Search students by name.
+- Sort students by GPA.
+- Sort students alphabetically.
+- Export reports.
+- Display top N students.
+- Show subject-wise averages.
