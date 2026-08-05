@@ -111,7 +111,7 @@ todo-list/
 Clone the repository
 
 ```bash
-git clone https://github.com/mdnaimuddinrahi/todo-list.git
+git clone https://github.com/mdnaimuddinrahi/python-learn.git
 ```
 
 Go to the project directory
