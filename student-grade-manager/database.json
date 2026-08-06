@@ -1,0 +1,13 @@
+[
+    {
+        "id": 1,
+        "name": "dummy",
+        "marks": {
+            "Mathematics": 12,
+            "English": 32,
+            "Science": 23,
+            "Social Studies": 23,
+            "Computer Science": 3
+        }
+    }
+]
