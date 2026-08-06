@@ -14,6 +14,6 @@ def load_data()->list[dict[str, object]]:
         logger.error(f"{DATA_FILE} contains invalid JSON. Starting with empty student list.")
         return []
     
-def save_data(data: list[dict[str, object]])->None:
+def save_data(data: list[dict[str, object]]) -> None:
     with open(DATA_FILE, "w") as file:
         json.dump(data, file, indent=4)

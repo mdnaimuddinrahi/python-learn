@@ -9,5 +9,93 @@
             "Social Studies": 23,
             "Computer Science": 3
         }
+    },
+    {
+        "id": 2,
+        "name": "holland",
+        "marks": {
+            "Mathematics": 11,
+            "English": 33,
+            "Science": 54,
+            "Social Studies": 22,
+            "Computer Science": 89
+        }
+    },
+    {
+        "id": 3,
+        "name": "polard",
+        "marks": {
+            "Mathematics": 89,
+            "English": 23,
+            "Science": 43,
+            "Social Studies": 23,
+            "Computer Science": 12
+        }
+    },
+    {
+        "id": 4,
+        "name": "simon",
+        "marks": {
+            "Mathematics": 12,
+            "English": 90,
+            "Science": 12,
+            "Social Studies": 54,
+            "Computer Science": 25
+        }
+    },
+    {
+        "id": 5,
+        "name": "collin",
+        "marks": {
+            "Mathematics": 90,
+            "English": 20,
+            "Science": 80,
+            "Social Studies": 40,
+            "Computer Science": 39
+        }
+    },
+    {
+        "id": 6,
+        "name": "Jimmy",
+        "marks": {
+            "Mathematics": 12,
+            "English": 32,
+            "Science": 54,
+            "Social Studies": 14,
+            "Computer Science": 64
+        }
+    },
+    {
+        "id": 7,
+        "name": "arold",
+        "marks": {
+            "Mathematics": 99,
+            "English": 34,
+            "Science": 10,
+            "Social Studies": 11,
+            "Computer Science": 5
+        }
+    },
+    {
+        "id": 8,
+        "name": "wood",
+        "marks": {
+            "Mathematics": 12,
+            "English": 21,
+            "Science": 43,
+            "Social Studies": 45,
+            "Computer Science": 12
+        }
+    },
+    {
+        "id": 9,
+        "name": "juvaile",
+        "marks": {
+            "Mathematics": 45,
+            "English": 90,
+            "Science": 90,
+            "Social Studies": 12,
+            "Computer Science": 90
+        }
     }
 ]
