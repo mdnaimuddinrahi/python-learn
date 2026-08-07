@@ -1,8 +1,8 @@
-from constants import MAX_MARKS, MIN_MARKS, INPUT_LIMIT, DEFAULT_DIVIDER
+import constants
 import re
 
 def is_valid_name(name: str) -> bool:
-    allowed_extra = {'.', ' ', '-'}
+    allowed_extra = {".", " ", "-"}
 
     for char in name:
         if not (char.isalpha() or char in allowed_extra):
@@ -10,7 +10,7 @@ def is_valid_name(name: str) -> bool:
         
     return True
 
-def valid_input(placeholder: str = '', name: str = '') -> str:
+def valid_input(placeholder: str = "", name: str = "") -> str:
     while True:
         value = input(placeholder).strip()
 
@@ -18,8 +18,8 @@ def valid_input(placeholder: str = '', name: str = '') -> str:
             print(f"{name} can't be empty. Please try again.")
             continue
 
-        if len(value)> INPUT_LIMIT:
-            print(f"{name} can't be more than {INPUT_LIMIT} characters.")
+        if len(value)> constants.INPUT_LIMIT:
+            print(f"{name} can't be more than {constants.INPUT_LIMIT} characters.")
             continue
 
         if not is_valid_name(value):
@@ -32,22 +32,38 @@ def valid_marks_input(placeholder: str = '', name: str = '') -> int:
     while True:
         value = valid_int_input(placeholder)
 
-        if value > MAX_MARKS:
+        if value > constants.MAX_MARKS:
             print("Marks can't be greater than 100")
             continue
-        if value < MIN_MARKS:
+        if value < constants.MIN_MARKS:
             print("Marks can't be less than 0")
             continue
 
-            return value
+        return value
 
-def print_divider(divided_by:int = DEFAULT_DIVIDER) -> None:
+def print_divider(divided_by:int = constants.DEFAULT_DIVIDER) -> None:
     print("-" * divided_by)
 
 
 def valid_int_input(placeholder: str) -> int:
     while True:
         value = input(placeholder)
+
         if re.fullmatch(r'-?\d+', value):
             return int(value)
         print("Invalid input. Please enter only number.")
+
+   
+def confirm_input(placeholder: str = "", name: str = "Confirmation") -> str:
+    while True:
+        value = input(placeholder).strip().lower()
+
+        if value in (constants.CONFIRM_YES, constants.CONFIRM_NO):
+            return value
+        elif not value:
+            print(f"{name} can't be empty. Please try again.")
+        else:
+            print("Wrong Input, please try again.")
+
+def confirm_input_message(message: str) -> str:
+    return f"{message} [{constants.CONFIRM_YES}/{constants.CONFIRM_NO}]: " 

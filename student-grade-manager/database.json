@@ -22,21 +22,10 @@
         }
     },
     {
-        "id": 3,
-        "name": "polard",
-        "marks": {
-            "Mathematics": 89,
-            "English": 23,
-            "Science": 43,
-            "Social Studies": 23,
-            "Computer Science": 12
-        }
-    },
-    {
         "id": 4,
         "name": "simon",
         "marks": {
-            "Mathematics": 12,
+            "Mathematics": 80,
             "English": 90,
             "Science": 12,
             "Social Studies": 54,
@@ -96,6 +85,17 @@
             "Science": 90,
             "Social Studies": 12,
             "Computer Science": 90
+        }
+    },
+    {
+        "id": 10,
+        "name": "Jiso",
+        "marks": {
+            "Mathematics": 10,
+            "English": 20,
+            "Science": 30,
+            "Social Studies": 40,
+            "Computer Science": 50
         }
     }
 ]

@@ -10,6 +10,11 @@ INPUT_LIMIT = 50
 DEFAULT_DIVIDER = 30
 CONFIRM_YES = 'y'
 CONFIRM_NO = 'n'
+ACTION_CREATE = 'create'
+ACTION_UPDATE = 'update'
+ACTION_DELETE = 'delete'
+Student = dict[str, object]
+StudentList = list[Student]
 
 SUBJECTS = (
     "Mathematics",
