@@ -19,6 +19,14 @@ def main() -> None:
             controller.update_student_record()
         elif choice == constants.MENU_DELETE:
             controller.delete_student_record()
+        elif choice == constants.MENU_REPORT:
+            controller.view_report()
+        elif choice == constants.MENU_ALL_REPORTS:
+            controller.view_all_reports()
+        elif choice == constants.MENU_RANKING:
+            controller.view_ranking()
+        elif choice == constants.MENU_STATISTICS:
+            pass
         elif choice == constants.MENU_EXIT:
             print("Good bye, Hope to see you soon!")
             return

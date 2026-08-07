@@ -94,3 +94,32 @@ Bonus Features (Optional)
 - Export reports.
 - Display top N students.
 - Show subject-wise averages.
+
+------------------------------
+Student ID      : 3
+Student Name    : Rahi
+
+Marks
+------
+Mathematics     : 85
+English         : 78
+Science         : 91
+Social Studies  : 82
+Computer Science: 95
+
+------------------------------
+Total Marks     : 431 / 500
+Average Marks   : 86.20
+Grade           : A+
+GPA             : 4.00
+Status          : PASS
+------------------------------
+
+-------------------------------------------------------------------------------------------------------
+ID   Name               Total    Average    Grade    GPA     Status
+-------------------------------------------------------------------------------------------------------
+1    Rahi               431      86.20      A+       4.00    PASS
+2    John               378      75.60      A        3.75    PASS
+3    Alice              284      56.80      B        3.00    PASS
+4    David              142      28.40      F        0.00    FAIL
+-------------------------------------------------------------------------------------------------------

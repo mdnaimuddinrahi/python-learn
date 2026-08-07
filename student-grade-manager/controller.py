@@ -32,6 +32,58 @@ def save_student_record(action: str, data: constants.StudentList, student: const
     print(f"\nStudent {action} successfully.")
     display_student_record(student)
 
+def ensure_student_records_exist(data: constants.StudentList) -> bool:
+
+    if not data:
+        print("No student records found.")
+
+        return False
+
+    return True
+
+def find_by_student_id(data: constants.StudentList, student_id: int) -> constants.Student | None:
+    return next(
+        (student for student in data if student['id'] == student_id),
+        None
+    )
+  
+def display_student_if_found(student: constants.Student | None, student_id: int) -> None:
+    if student is None:
+        utils.print_divider()
+        print(f'Student Not found with ID {student_id}')
+        print()
+    else: 
+        display_student_record(student)
+
+def calculate_total_marks(marks: dict[str, int]) -> int:
+    return sum(marks.values())
+
+def calculate_average_marks(marks: dict[str, int]) -> float:
+    return calculate_total_marks(marks)/ len(constants.SUBJECTS)
+
+def calculate_gpa(marks: dict[str, int]) -> float:
+    average_mark = calculate_average_marks(marks)
+
+    for minimum_mark, maximum_mark, letter, gpa in constants.GRADE_BOUNDARIES:
+        if minimum_mark <= average_mark <= maximum_mark:
+            return gpa
+    raise ValueError(f"No matching gpa boundary for average: {average_mark}")
+
+def find_grade(marks: dict[str, int]) -> str:
+    average_mark = calculate_average_marks(marks)
+
+    for minimum_mark, maximum_mark, letter, gpa in constants.GRADE_BOUNDARIES:
+        if minimum_mark <= average_mark <= maximum_mark:
+            return letter
+    raise ValueError(f"No matching grade boundary for average: {average_mark}")
+
+def get_pass_or_fail_status(marks: dict[str, int]) -> str:
+    
+    for subject, mark in marks.items():
+        if mark < constants.PASS_MARKS:
+            return "FAIL"
+    return "PASS"
+
 def add_student() -> None:
     print('Please enter student details')
     
@@ -48,16 +100,6 @@ def add_student() -> None:
     }
     data.append(student)
     save_student_record(constants.ACTION_CREATE, data, student)
-    
-
-def ensure_student_records_exist(data: constants.StudentList) -> bool:
-
-    if not data:
-        print("No student records found.")
-
-        return False
-
-    return True
 
 def view_all_students() -> None:
     data = load_data()
@@ -66,20 +108,6 @@ def view_all_students() -> None:
         return
 
     for student in data:
-        display_student_record(student)
-
-def find_by_student_id(data: constants.StudentList, student_id: int) -> constants.Student | None:
-    return next(
-        (student for student in data if student['id'] == student_id),
-        None
-    )
-  
-def display_student_if_found(student: constants.Student | None, student_id: int) -> None:
-    if student is None:
-        utils.print_divider()
-        print(f'Student Not found with ID {student_id}')
-        print()
-    else: 
         display_student_record(student)
 
 def view_student_details() -> None:
@@ -93,7 +121,9 @@ def view_student_details() -> None:
         student = find_by_student_id(data, student_id)
         display_student_if_found(student, student_id)
         
-        search_again = utils.confirm_input(f"Do you want search again? [{constants.CONFIRM_YES}/{constants.CONFIRM_NO}]: ", "Confirmation")
+        search_again = utils.confirm_input(
+            utils.confirm_input_message("Do you want search again?")
+        )
 
         if search_again == constants.CONFIRM_NO:
             return
@@ -106,23 +136,23 @@ def update_student_record() -> None:
         display_student_if_found(student, student_id)
 
         if student is None:
-            search_again = utils.confirm_input(f"Do you want search again? [{constants.CONFIRM_YES}/{constants.CONFIRM_NO}]: ", "Confirmation")
-
+            search_again = utils.confirm_input(
+                utils.confirm_input_message("Do you want search again?")
+            )
             if search_again == constants.CONFIRM_YES:
                 continue
             return
-        should_update_name = utils.confirm_input(f'Do you want to update Name? [{constants.CONFIRM_YES}/{constants.CONFIRM_NO}]: ', 'Confirmation')
+        should_update_name = utils.confirm_input(
+            utils.confirm_input_message("Do you want to update Name?")
+        )
         
         if should_update_name == constants.CONFIRM_YES:
             student['name'] = utils.valid_input("Enter Name: ", "Name")
 
-        # marks = student['marks']
-
         for subject in constants.SUBJECTS:
             should_update_mark = utils.confirm_input(
-                f'Do you want to update {subject} marks? [{constants.CONFIRM_YES}/{constants.CONFIRM_NO}]: ',
-                'Confirmation'
-            )
+                            utils.confirm_input_message(f"Do you want to update {subject} marks?")
+                        )
 
             if should_update_mark == constants.CONFIRM_YES:
                 student['marks'][subject] = utils.valid_marks_input(f"Enter {subject} marks: ", subject)
@@ -134,14 +164,15 @@ def update_student_record() -> None:
         
         if search_again == constants.CONFIRM_NO:
             return
-        
-def delete_student_record():
+
+def delete_student_record() -> None:
     data = load_data()
 
     while True:
         student_id = utils.valid_int_input("Enter student id: ")
         student = find_by_student_id(data, student_id)
         display_student_if_found(student, student_id)
+
         if student is None:
             search_again = utils.confirm_input(
                 utils.confirm_input_message("Do you want to search again?")
@@ -159,3 +190,66 @@ def delete_student_record():
             save_student_record(constants.ACTION_DELETE, data, student)
         return
 
+def view_report() -> None:
+    data = load_data()
+    
+    if not ensure_student_records_exist(data): 
+        return
+    
+    while True:
+        print()
+        student_id = utils.valid_int_input("Enter student id: ")
+        student = find_by_student_id(data, student_id)
+        display_student_if_found(student, student_id)
+
+        if student is not None:
+            marks = student['marks']
+            total_marks = calculate_total_marks(marks)
+            average_marks = calculate_average_marks(marks)
+            grade = find_grade(marks)
+            gpa = calculate_gpa(marks)
+            status = get_pass_or_fail_status(marks)
+            maximum_marks = len(constants.SUBJECTS) * constants.MAX_MARKS
+            label_width = 15
+
+            print(f"{'Total Marks':<{label_width}}: {total_marks} / {maximum_marks}")
+            print(f"{'Average Marks':<{label_width}}: {average_marks}")
+            print(f"{'Grade':<{label_width}}: {grade}")
+            print(f"{'GPA':<{label_width}}: {gpa:.2f}")
+            print(f"{'Status':<{label_width}}: {status}")
+            utils.print_divider()
+            print()
+            
+        search_again = utils.confirm_input(
+            utils.confirm_input_message("Do you want to search again?")
+        )
+
+        if search_again == constants.CONFIRM_NO:
+            return
+
+def view_all_reports() -> None:
+    data = load_data()
+
+    if not ensure_student_records_exist(data): 
+        return    
+
+    utils.print_divider(70)
+    print(f"{'ID':<5}{'Name':<19}{'Total':<9}{'Average':<11}{'Grade':<9}{'GPA':<8}{'Status'}")
+    utils.print_divider(70)
+
+    for student in data:
+        marks = student['marks']
+        total = calculate_total_marks(marks)
+        average = calculate_average_marks(marks)
+        grade = find_grade(marks)
+        gpa = calculate_gpa(marks)
+        status = get_pass_or_fail_status(marks)
+        print(f"{student['id']:<5}{student['name']:<19}{total:<9}{average:<11.2f}{grade:<9}{gpa:<8.2f}{status}")
+    utils.print_divider(70)
+    print()
+
+def view_ranking() -> None:
+    pass
+
+def view_statistics() -> None:
+    pass
