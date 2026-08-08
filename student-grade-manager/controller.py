@@ -213,7 +213,7 @@ def view_report() -> None:
             label_width = 15
 
             print(f"{'Total Marks':<{label_width}}: {total_marks} / {maximum_marks}")
-            print(f"{'Average Marks':<{label_width}}: {average_marks}")
+            print(f"{'Average Marks':<{label_width}}: {average_marks:.2f}")
             print(f"{'Grade':<{label_width}}: {grade}")
             print(f"{'GPA':<{label_width}}: {gpa:.2f}")
             print(f"{'Status':<{label_width}}: {status}")
@@ -249,7 +249,63 @@ def view_all_reports() -> None:
     print()
 
 def view_ranking() -> None:
-    pass
+    data = load_data()
+
+    if not ensure_student_records_exist(data): 
+        return    
+
+    sorted_data = sorted(data, key = lambda student: calculate_average_marks(student['marks']), reverse=True)
+    utils.print_divider(70)
+    print(f"{'Rank':<6}{'ID':<5}{'Name':<22}{'Average':<11}{'Grade':<9}{'GPA'}")
+    utils.print_divider(70)
+
+    for rank, student in enumerate(sorted_data, start=1):
+        average = calculate_average_marks(student['marks'])
+        grade = find_grade(student['marks'])
+        gpa = calculate_gpa(student['marks'])
+        print(f"{rank:<6}{student['id']:<5}{student['name']:<22}{average:<11.2f}{grade:<9}{gpa:<.2f}")
+    utils.print_divider(70)
+
 
 def view_statistics() -> None:
-    pass
+    data = load_data()
+
+    if not ensure_student_records_exist(data): 
+        return    
+
+    total_students = len(data)
+    averages = [calculate_average_marks(student['marks']) for student in data]
+
+    class_average = sum(averages) / total_students
+    highest_average = max(averages)
+    lowest_average = min(averages)
+
+    passed_students = sum(1 for student in data if get_pass_or_fail_status(student['marks']) == 'PASS')
+    failed_students = total_students - passed_students
+    pass_rate = passed_students / total_students * 100
+    fail_rate = failed_students / total_students * 100
+
+    highest_scorer = max(
+        data, 
+        key = lambda student: calculate_average_marks(student['marks']))
+    lowest_scorer = min(
+        data, 
+        key = lambda student: calculate_average_marks(student['marks']))
+    label_width = 17
+    print()
+    utils.print_divider(50, "=")
+    print(f"{' ':<{label_width}}CLASS STATISTICS")
+    utils.print_divider(50, "=")
+    
+    
+    print(f"\n{'Total students':<{label_width}}: {total_students}\n")
+    print(f"{'Class Average':<{label_width}}: {class_average:.2f}\n")
+    print(f"{'Highest Average':<{label_width}}: {highest_average:.2f}")
+    print(f"{'Lowest Average':<{label_width}}: {lowest_average:.2f}\n")
+    print(f"{'Passed Students':<{label_width}}: {passed_students}")
+    print(f"{'Failed Students':<{label_width}}: {failed_students}\n")
+    print(f"{'Pass Rate':<{label_width}}: {pass_rate:.2f}%")
+    print(f"{'Fail Rate':<{label_width}}: {fail_rate:.2f}%\n")
+    print(f"{'Highest Scorer':<{label_width}}: {highest_scorer['name']}")
+    print(f"{'Lowest Scorer':<{label_width}}: {lowest_scorer['name']}\n")
+    utils.print_divider(50, "=")

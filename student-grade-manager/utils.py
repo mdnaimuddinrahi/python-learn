@@ -41,8 +41,8 @@ def valid_marks_input(placeholder: str = '', name: str = '') -> int:
 
         return value
 
-def print_divider(divided_by:int = constants.DEFAULT_DIVIDER) -> None:
-    print("-" * divided_by)
+def print_divider(divided_by:int = constants.DEFAULT_DIVIDER, divider = "-") -> None:
+    print(divider * divided_by)
 
 
 def valid_int_input(placeholder: str) -> int:
