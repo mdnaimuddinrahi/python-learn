@@ -1,0 +1,877 @@
+DOCTOR APPOINTMENT BOOKING MANAGEMENT SYSTEM
+================================================
+
+PROJECT REQUIREMENTS AND SPECIFICATION
+======================================
+
+
+1. PROJECT OVERVIEW
+-------------------
+
+The Doctor Appointment Booking Management System is a command-line
+application designed to help a small clinic manage doctors, patients,
+appointment schedules, and available time slots.
+
+The clinic currently manages appointments manually through phone calls,
+messages, or paper records. As the number of doctors and patients increases,
+managing appointments manually becomes difficult and can lead to scheduling
+mistakes.
+
+The system will provide a simple and organized way to manage doctor
+appointments. It will allow clinic staff to create appointments, check
+doctor availability, manage cancellations, and view daily schedules.
+
+The first version of the system will be built using Python and will focus
+on programming fundamentals, data structures, validation, and business
+logic.
+
+
+2. PROJECT STORY
+----------------
+
+A small medical clinic has several doctors who provide different medical
+services. Patients contact the clinic to make appointments with a specific
+doctor.
+
+Each doctor has their own working schedule. For example, a doctor may work
+from 9:00 AM to 1:00 PM and accept appointments every 30 minutes.
+
+The clinic currently records appointments manually. When a patient calls,
+the receptionist checks a notebook or existing records to determine whether
+the requested doctor and time are available.
+
+As the number of appointments increases, this manual process creates several
+problems.
+
+A receptionist may accidentally book two patients with the same doctor at
+the same time. It may also be difficult to find a patient's appointment,
+check all appointments for a particular day, or identify which time slots
+are still available.
+
+The clinic needs a simple system that can manage these activities in an
+organized way.
+
+The clinic therefore requests a Doctor Appointment Booking Management
+System that can manage doctors, patients, schedules, time slots, and
+appointments.
+
+
+3. PROBLEM STATEMENT
+--------------------
+
+The clinic faces the following problems:
+
+1. Appointments are managed manually.
+2. It is difficult to check doctor availability quickly.
+3. Two patients may accidentally receive the same doctor's time slot.
+4. Finding a specific patient's appointment can take time.
+5. Cancelled appointments may not be properly tracked.
+6. Staff cannot easily see the complete schedule for a doctor.
+7. Doctors may have different working hours.
+8. Some time slots may need to be blocked because of lunch, meetings,
+   emergencies, or other reasons.
+9. Maintaining appointment records manually can cause data errors.
+10. The clinic needs a simple and consistent way to manage appointment data.
+
+
+4. PROJECT PURPOSE
+------------------
+
+The purpose of the system is to provide a simple appointment management
+solution for a small clinic.
+
+The system should help clinic staff:
+
+- Manage doctor information.
+- Manage patient information.
+- Define doctor working schedules.
+- Generate appointment slots dynamically.
+- Check available appointment slots.
+- Create patient appointments.
+- Prevent double bookings.
+- View appointment details.
+- Search appointments.
+- Cancel appointments.
+- Block unavailable time slots.
+- View a doctor's daily schedule.
+- Keep appointment records organized.
+
+
+5. PROJECT GOALS
+----------------
+
+The main goals of the project are:
+
+1. Build a practical Python application based on a real-world problem.
+2. Provide a simple way to manage doctor appointments.
+3. Prevent appointment conflicts.
+4. Make doctor availability easy to check.
+5. Keep patient and appointment information organized.
+6. Practice Python data structures and business logic.
+7. Practice input validation and date/time handling.
+8. Build the application in a modular and maintainable way.
+9. Create a foundation that can later be extended to use a database or
+   web interface.
+
+
+6. USERS OF THE SYSTEM
+----------------------
+
+The first version of the system is intended for clinic staff or a
+receptionist.
+
+The staff member will use the application to:
+
+- Add doctors.
+- Add patients.
+- Manage doctor schedules.
+- Check availability.
+- Create appointments.
+- View appointments.
+- Search appointments.
+- Cancel appointments.
+- Block or unblock time slots.
+
+
+7. MAIN DATA ENTITIES
+---------------------
+
+The system will manage four main types of data:
+
+1. Doctor
+2. Patient
+3. Doctor Schedule / Time Slot
+4. Appointment
+
+
+8. DOCTOR DATA
+--------------
+
+Each doctor should contain basic information.
+
+Example:
+
+Doctor:
+    id: 1
+    name: "Dr. Rahman"
+    specialization: "Cardiology"
+
+Suggested fields:
+
+- id
+- name
+- specialization
+- phone (optional)
+- status
+
+The status can be used to indicate whether a doctor is active.
+
+
+9. PATIENT DATA
+---------------
+
+Each patient should contain basic information.
+
+Example:
+
+Patient:
+    id: 1
+    name: "John Doe"
+    phone: "01712345678"
+    age: 32
+
+Suggested fields:
+
+- id
+- name
+- phone
+- age
+- gender (optional)
+
+The first version should store only information necessary for appointment
+management. Sensitive medical information should not be stored in this
+basic project.
+
+
+10. DOCTOR WORKING SCHEDULE
+---------------------------
+
+Each doctor can have their own working schedule.
+
+For example:
+
+Doctor:
+    Dr. Rahman
+
+Working Day:
+    Monday
+
+Opening Time:
+    09:00
+
+Closing Time:
+    13:00
+
+Slot Duration:
+    30 minutes
+
+The system can use these settings to generate appointment slots.
+
+Example generated slots:
+
+09:00
+09:30
+10:00
+10:30
+11:00
+11:30
+12:00
+12:30
+
+
+11. DYNAMIC TIME SLOT GENERATION
+--------------------------------
+
+Time slots should be generated dynamically from the doctor's working
+schedule.
+
+The system should not require every possible time slot to be manually
+stored.
+
+For example:
+
+Opening Time: 09:00
+Closing Time: 12:00
+Slot Duration: 30 minutes
+
+The system generates:
+
+09:00
+09:30
+10:00
+10:30
+11:00
+11:30
+
+If the slot duration changes to 60 minutes, the system can generate:
+
+09:00
+10:00
+11:00
+
+This makes the system flexible and reduces unnecessary stored data.
+
+
+12. SLOT STATUS
+---------------
+
+A generated time slot can have one of the following states:
+
+- Available
+- Booked
+- Blocked
+
+Available:
+    The slot can be booked.
+
+Booked:
+    The slot has an active appointment.
+
+Blocked:
+    The slot cannot be booked because it has been intentionally made
+    unavailable.
+
+
+13. BLOCKED TIME SLOTS
+----------------------
+
+A clinic may need to make a time slot unavailable.
+
+For example:
+
+- Doctor's lunch break
+- Doctor's meeting
+- Emergency situation
+- Personal appointment
+- Clinic maintenance
+
+Instead of deleting the generated slot, the system should mark it as
+blocked.
+
+Example:
+
+09:00 - Available
+09:30 - Available
+10:00 - Booked
+10:30 - Blocked
+11:00 - Available
+
+A patient cannot book a blocked slot.
+
+A blocked slot can later be unblocked and become available again.
+
+
+14. APPOINTMENT DATA
+--------------------
+
+Each appointment should contain:
+
+Appointment:
+    id: 1
+    patient_id: 1
+    doctor_id: 1
+    date: "2026-08-10"
+    time: "10:00"
+    status: "confirmed"
+
+Suggested fields:
+
+- id
+- patient_id
+- doctor_id
+- date
+- time
+- status
+- created_at (optional)
+
+Possible appointment statuses:
+
+- confirmed
+- cancelled
+- completed
+
+The first version may initially use only:
+
+- confirmed
+- cancelled
+
+
+15. IMPORTANT DATA RELATIONSHIPS
+--------------------------------
+
+A doctor can have many appointments.
+
+A patient can have many appointments.
+
+An appointment belongs to one doctor and one patient.
+
+The appointment connects the patient and doctor.
+
+Conceptually:
+
+Patient
+    |
+    | 1
+    |
+    | many
+Appointment
+    |
+    | many
+    |
+    | 1
+Doctor
+
+
+16. HOW DATA WILL BE KEPT
+--------------------------
+
+For the first version, data should be kept in Python memory using lists
+and dictionaries.
+
+Example:
+
+doctors = [
+    {
+        "id": 1,
+        "name": "Dr. Rahman",
+        "specialization": "Cardiology"
+    }
+]
+
+patients = [
+    {
+        "id": 1,
+        "name": "John Doe",
+        "phone": "01712345678",
+        "age": 32
+    }
+]
+
+appointments = [
+    {
+        "id": 1,
+        "patient_id": 1,
+        "doctor_id": 1,
+        "date": "2026-08-10",
+        "time": "10:00",
+        "status": "confirmed"
+    }
+]
+
+Doctor schedules can also be represented using dictionaries and lists.
+
+The first version does not require a database.
+
+
+17. DATA LIFETIME IN VERSION 1
+------------------------------
+
+Because the first version uses Python lists and dictionaries, the data will
+exist only while the program is running.
+
+When the program is closed, the data will be lost.
+
+This is acceptable for the first learning version because the main purpose
+is to practice Python programming, data structures, functions, validation,
+and business rules.
+
+Persistent storage can be added in a later version.
+
+
+18. FUTURE DATA STORAGE
+-----------------------
+
+After completing the first version, the project can be improved by storing
+data in a JSON file.
+
+Example files:
+
+data/
+    doctors.json
+    patients.json
+    appointments.json
+    schedules.json
+
+A later version can use SQLite for more reliable data management.
+
+Example database tables:
+
+- doctors
+- patients
+- schedules
+- appointments
+- blocked_slots
+
+A database version would allow the data to remain available after the
+application is closed.
+
+
+19. REQUIRED FEATURES
+---------------------
+
+19.1 Doctor Management
+
+The system should allow staff to:
+
+- Add a doctor.
+- View a doctor.
+- List all doctors.
+- Search doctors.
+- Update doctor information.
+- Deactivate a doctor.
+
+
+19.2 Patient Management
+
+The system should allow staff to:
+
+- Add a patient.
+- View a patient.
+- List all patients.
+- Search patients.
+- Update patient information.
+
+
+19.3 Doctor Schedule Management
+
+The system should allow staff to define:
+
+- Working days.
+- Opening time.
+- Closing time.
+- Slot duration.
+
+Example:
+
+Doctor: Dr. Rahman
+Day: Monday
+Opening: 09:00
+Closing: 13:00
+Duration: 30 minutes
+
+
+19.4 Check Doctor Availability
+
+Staff should be able to select:
+
+- Doctor
+- Date
+
+The system should display the doctor's slots for that date.
+
+Example:
+
+DOCTOR: Dr. Rahman
+DATE: 2026-08-10
+
+09:00 - Available
+09:30 - Booked
+10:00 - Available
+10:30 - Blocked
+11:00 - Available
+11:30 - Available
+
+
+19.5 Create Appointment
+
+Staff should provide:
+
+- Patient
+- Doctor
+- Date
+- Time
+
+The system must validate the requested appointment before creating it.
+
+The appointment can be created only when the selected slot is available.
+
+
+19.6 View Appointment
+
+Staff can provide an Appointment ID to see:
+
+- Appointment ID
+- Patient
+- Doctor
+- Date
+- Time
+- Status
+
+
+19.7 List Appointments
+
+Staff can view all appointments.
+
+The list should include:
+
+- ID
+- Patient
+- Doctor
+- Date
+- Time
+- Status
+
+
+19.8 Search Appointments
+
+Staff should be able to search appointments by:
+
+- Patient name
+- Patient phone
+- Doctor name
+- Appointment date
+
+
+19.9 Cancel Appointment
+
+Staff can cancel an appointment using its Appointment ID.
+
+The system should change the status to:
+
+cancelled
+
+The appointment should remain in the records.
+
+The cancelled appointment should no longer occupy the time slot.
+
+
+19.10 Block Time Slot
+
+Staff can block a doctor's time slot.
+
+The system should require:
+
+- Doctor
+- Date
+- Time
+
+The blocked slot cannot be booked.
+
+
+19.11 Unblock Time Slot
+
+Staff can remove the blocked status from a slot.
+
+After unblocking, the slot becomes available if there is no active
+appointment.
+
+
+19.12 Daily Schedule
+
+Staff can select a doctor and date to view the complete schedule.
+
+Example:
+
+DOCTOR: Dr. Rahman
+DATE: 2026-08-10
+
+09:00 - Available
+09:30 - John Doe - Confirmed
+10:00 - Available
+10:30 - Blocked
+11:00 - Sarah - Confirmed
+11:30 - Available
+
+
+20. MAIN MENU
+------------
+
+The command-line application may use a menu similar to:
+
+===============================
+ DOCTOR APPOINTMENT MANAGEMENT
+===============================
+
+1. Doctor Management
+2. Patient Management
+3. Manage Doctor Schedule
+4. Check Availability
+5. Create Appointment
+6. View Appointment
+7. List Appointments
+8. Search Appointments
+9. Cancel Appointment
+10. Block Time Slot
+11. Unblock Time Slot
+12. Daily Schedule
+13. Exit
+
+Enter your choice:
+
+
+21. APPOINTMENT CREATION WORKFLOW
+---------------------------------
+
+Example scenario:
+
+A patient named John Doe wants an appointment with Dr. Rahman.
+
+The staff selects:
+
+Doctor:
+    Dr. Rahman
+
+Patient:
+    John Doe
+
+Date:
+    2026-08-10
+
+Time:
+    10:00
+
+The system performs the following checks:
+
+1. Does the doctor exist?
+2. Does the patient exist?
+3. Is the date valid?
+4. Does the doctor work on that date?
+5. Is the requested time inside the doctor's working hours?
+6. Is the time a valid generated slot?
+7. Is the slot blocked?
+8. Is the slot already occupied by an active appointment?
+
+If all checks pass, the system creates the appointment.
+
+Example result:
+
+Appointment created successfully.
+
+Appointment ID: 1
+Patient: John Doe
+Doctor: Dr. Rahman
+Date: 2026-08-10
+Time: 10:00
+Status: Confirmed
+
+
+22. DOUBLE BOOKING RULE
+-----------------------
+
+The most important appointment rule is that a doctor cannot have two
+active appointments at the same date and time.
+
+For example:
+
+Existing appointment:
+
+Doctor: Dr. Rahman
+Date: 2026-08-10
+Time: 10:00
+
+If another patient tries to book:
+
+Doctor: Dr. Rahman
+Date: 2026-08-10
+Time: 10:00
+
+The system must reject the request.
+
+The system should display:
+
+This time slot is already booked for this doctor.
+
+
+23. IMPORTANT BUSINESS RULES
+----------------------------
+
+1. Every doctor must have a unique ID.
+2. Every patient must have a unique ID.
+3. Every appointment must have a unique ID.
+4. A doctor must exist before an appointment can be created.
+5. A patient must exist before an appointment can be created.
+6. A doctor can have many appointments.
+7. A patient can have many appointments.
+8. A doctor cannot have two active appointments at the same date and time.
+9. A blocked slot cannot be booked.
+10. A cancelled appointment does not occupy the time slot.
+11. Appointment times must come from the doctor's generated schedule.
+12. Appointments cannot be created outside the doctor's working hours.
+13. Invalid dates must be rejected.
+14. Past dates should not be accepted for new appointments.
+15. A cancelled appointment should remain in the records.
+16. A blocked slot should not be deleted from the generated schedule.
+17. A slot can become available again after an appointment is cancelled.
+18. A slot can become available again after it is unblocked.
+
+
+24. DATA VALIDATION
+-------------------
+
+The system should validate user input.
+
+Examples:
+
+Doctor name:
+    Must not be empty.
+
+Patient name:
+    Must not be empty.
+
+Phone:
+    Must contain a valid number format.
+
+Date:
+    Must follow the expected date format.
+
+Time:
+    Must follow the expected time format.
+
+ID:
+    Must be a valid existing ID when viewing, updating, or cancelling
+    records.
+
+Appointment:
+    Must use an available slot.
+
+
+25. PROJECT STRUCTURE
+---------------------
+
+The project should be organized into small functions rather than putting
+all logic inside the main menu.
+
+Possible functions:
+
+Doctor functions:
+    add_doctor()
+    view_doctor()
+    doctor_list()
+    search_doctors()
+    update_doctor()
+
+Patient functions:
+    add_patient()
+    view_patient()
+    patient_list()
+    search_patients()
+    update_patient()
+
+Schedule functions:
+    generate_slots()
+    check_availability()
+    block_slot()
+    unblock_slot()
+    daily_schedule()
+
+Appointment functions:
+    create_appointment()
+    view_appointment()
+    appointment_list()
+    search_appointments()
+    cancel_appointment()
+
+Validation/helper functions:
+    find_doctor_by_id()
+    find_patient_by_id()
+    find_appointment_by_id()
+    validate_date()
+    validate_time()
+
+
+26. INITIAL TECHNICAL SCOPE
+---------------------------
+
+The first version should use basic Python concepts already learned.
+
+Required concepts include:
+
+- Variables
+- Strings
+- Integers
+- Lists
+- Dictionaries
+- Loops
+- Functions
+- Conditional statements
+- List comprehensions
+- String methods
+- Basic date and time handling
+- Input validation
+
+
+28. PROJECT SUCCESS CRITERIA
+----------------------------
+
+The project will be considered successful when it can:
+
+1. Add and manage doctors.
+2. Add and manage patients.
+3. Define doctor working schedules.
+4. Generate time slots dynamically.
+5. Show available and unavailable slots.
+6. Create appointments.
+7. Prevent double bookings.
+8. Cancel appointments.
+9. Block and unblock time slots.
+10. Search and view appointment information.
+11. Display a doctor's daily schedule.
+12. Keep appointment data organized during program execution.
+13. Validate incorrect user input.
+14. Follow the defined business rules.
+
+
+29. FINAL PROJECT GOAL
+----------------------
+
+The final goal of the first version is to build a practical command-line
+Doctor Appointment Booking Management System that solves a real scheduling
+problem for a small clinic.
+
+The project should demonstrate the ability to take a real-world business
+requirement, design suitable data structures, create business rules, validate
+user input, and implement the solution using Python.
+
+The system should remain small enough to complete as a learning project
+while having realistic business logic that can later be extended into a
+larger application.
