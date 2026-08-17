@@ -1,0 +1,47 @@
+[
+    {
+        "id": 1,
+        "name": "Kolin",
+        "specialization": "Phycology",
+        "created_at": "2026-08-17 08:31:40",
+        "updated_at": "-",
+        "phone": "0199303423",
+        "status": "Active"
+    },
+    {
+        "id": 2,
+        "name": "Jimmy",
+        "specialization": "Androscopy",
+        "created_at": "2026-08-17 08:32:18",
+        "updated_at": "-",
+        "phone": "0199892345",
+        "status": "In-Active"
+    },
+    {
+        "id": 3,
+        "name": "Polard",
+        "specialization": "Cordiology",
+        "created_at": "2026-08-17 08:32:48",
+        "updated_at": "-",
+        "phone": "0133902343",
+        "status": "On-Leave"
+    },
+    {
+        "id": 4,
+        "name": "Midola",
+        "specialization": "Gianlogy",
+        "created_at": "2026-08-17 08:33:22",
+        "updated_at": "-",
+        "phone": "0133540344",
+        "status": "On-Leave"
+    },
+    {
+        "id": 5,
+        "name": "koland",
+        "specialization": "tylieo",
+        "created_at": "2026-08-17 08:37:28",
+        "updated_at": "-",
+        "phone": "0133343234",
+        "status": "Closed"
+    }
+]
