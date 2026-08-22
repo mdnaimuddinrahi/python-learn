@@ -9,7 +9,8 @@ PATIENT_MENU_VIEW = 2
 PATIENT_MENU_LIST = 3
 PATIENT_MENU_UPDATE = 4
 PATIENT_MENU_STATUS = 5
-PATIENT_MENU_BACK = 6
+PATIENT_MENU_DELETE = 6
+PATIENT_MENU_BACK = 7
 
 MENU_PATIENT_MANAGE_OPTIONS = """
 1. Add Patient
@@ -17,7 +18,8 @@ MENU_PATIENT_MANAGE_OPTIONS = """
 3. Patient List
 4. Update Patient
 5. Patient Status
-6. Back
+6. Patient Delete
+7. Back
 """
 
 COLUMN_ID = "id"
@@ -97,7 +99,7 @@ def manage_patient():
     helper.print_title("Patient Management")
     while True:
         print(MENU_PATIENT_MANAGE_OPTIONS)
-        choice = helper.valid_option_input("Choose an option: ", name="Option", max_value=6)
+        choice = helper.valid_option_input("Choose an option: ", name="Option", max_value=7)
 
         if choice == PATIENT_MENU_ADD:
             add_patient()          
@@ -109,6 +111,8 @@ def manage_patient():
             update_patient()
         elif choice == PATIENT_MENU_STATUS:
             patient_status()
+        elif choice == PATIENT_MENU_DELETE:
+            patient_delete()
         elif choice == PATIENT_MENU_BACK:
             return
         else:
@@ -130,8 +134,53 @@ PATIENT_LIST_BY_PHONE = 5
 PATIENT_LIST_BY_ADDRESS = 6
 PATIENT_LIST_BACK = 7
 
+def patient_delete() -> None:
+    data = load_data(constant.TABLE_PATIENT)
+
+    if not helper.ensure_records_exist(data, 'patient'):
+        return
+
+    while True:
+        patient_id = helper.valid_input(
+            placeholder="Enter Patient Id:",
+            name="Patient",
+            type="int"
+        )
+
+        patient = helper.find_by_id(data, patient_id)
+
+        display_patient_if_found(patient, patient_id)
+
+        if patient is None:
+            search_again = helper.confirm_input(
+                helper.confirm_input_message("Do you want to search again?")
+            )
+
+            if search_again == constant.CONFIRM_YES:
+                continue
+
+            return
+
+        should_delete = helper.confirm_input(
+            helper.confirm_input_message("Do you want to delete this patient?")
+        )
+
+        if should_delete == constant.CONFIRM_YES:
+            data.remove(patient)
+
+            save_patient_record(
+                constant.ACTION_DELETE,
+                data,
+                patient
+            )
+
+        return
+
 def patient_status() -> None:
     data = load_data(constant.TABLE_PATIENT)
+
+    if not helper.ensure_records_exist(data, 'patient'):
+        return
 
     while True:
         patient_id = helper.valid_input(

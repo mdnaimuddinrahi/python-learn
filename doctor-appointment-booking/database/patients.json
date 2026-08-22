@@ -10,24 +10,9 @@
         "blood_group": "A-",
         "emergency_contact_name": "rita",
         "emergency_contact_phone": "23402342343",
-        "status": "In-Active",
+        "status": "Closed",
         "created_at": "2026-08-21 22:58:31",
-        "updated_at": "-"
-    },
-    {
-        "id": 2,
-        "name": "Sarah Thompson",
-        "date_of_birth": "1990-03-22",
-        "address": "45 Deansgate Road, City Centre, Manchester",
-        "phone": "016112345678",
-        "email": "sarah.thompson@gmail.com",
-        "gender": "Female",
-        "blood_group": "O+",
-        "emergency_contact_name": "David Thompson",
-        "emergency_contact_phone": "07712345678",
-        "status": "Active",
-        "created_at": "2026-08-20 09:14:02",
-        "updated_at": "2026-08-21 11:03:19"
+        "updated_at": "2026-08-22 19:51:50"
     },
     {
         "id": 3,
@@ -298,5 +283,20 @@
         "status": "In-Active",
         "created_at": "2026-08-02 18:26:39",
         "updated_at": "2026-08-03 10:47:03"
+    },
+    {
+        "id": 21,
+        "name": "kolingo",
+        "date_of_birth": "1993-12-31",
+        "address": "tilsdwe ewelc sdfr",
+        "phone": "01332312345",
+        "email": "fa@gmail.com",
+        "gender": "Male",
+        "blood_group": "B+",
+        "emergency_contact_name": "oosd",
+        "emergency_contact_phone": "01223423123",
+        "status": "On-Leave",
+        "created_at": "2026-08-22 19:59:54",
+        "updated_at": "-"
     }
 ]
