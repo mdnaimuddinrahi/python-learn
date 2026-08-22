@@ -1,6 +1,7 @@
 import app.constant as constant
 import re
 from typing import Literal
+from datetime import datetime
 
 def is_valid_name(name: str) -> bool:
     allowed_extra = {".", " ", "-", ","}
@@ -11,9 +12,16 @@ def is_valid_name(name: str) -> bool:
         
     return True
 
-
 def is_valid_phone(value: str) -> bool:
     return bool(re.fullmatch(r"01[3-9]\d{8}", value))
+
+def is_valid_email(value: str) -> bool:
+    return bool(
+        re.fullmatch(
+            r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$",
+            value
+        )
+    )
 
 def valid_input(
     placeholder: str = "",
@@ -44,6 +52,10 @@ def valid_input(
             if not is_valid_phone(value):
                 print(f"{name} must be a valid phone number.")
                 continue
+        elif type == "email":
+            if not is_valid_email(value):
+                print(f"{name} must be a valid email address.")
+                continue
 
         elif type == "text":
             if not is_valid_name(value):
@@ -54,6 +66,30 @@ def valid_input(
                 continue
 
         return value
+
+
+def valid_date_input(
+    placeholder: str = "",
+    name: str = "Date",
+    required: bool = True,
+) -> str:
+    while True:
+        value = input(placeholder).strip()
+
+        if required and not value:
+            print(f"{name} can't be empty. Please try again.")
+            continue
+
+        if not value:
+            return value
+
+        try:
+            datetime.strptime(value, "%Y-%m-%d")
+            return value
+        except ValueError:
+            print(
+                f"{name} must be a valid date in YYYY-MM-DD format."
+            )
 
 def valid_option_input(
     placeholder: str = "",
@@ -86,11 +122,6 @@ def print_divider(
 ) -> None:
     print(f"{color}{divider * divided_by}{constant.COLOR_RESET}")
 
-# def print_title(title: str) -> None:
-#     print_divider(divider="=")
-#     print(f"{constant.CYAN}  {title}{constant.RESET}")
-#     print_divider(divider="=")
-#     print()
 def print_title(title: str) -> None:
     width = constant.DEFAULT_DIVIDER
 
@@ -98,7 +129,6 @@ def print_title(title: str) -> None:
     print(f"{constant.COLOR_CYAN}{title.center(width)}{constant.COLOR_RESET}")
     print_divider(divider="=")
     print()
-
 
 def confirm_input(placeholder: str = "", name: str = "Confirmation") -> str:
     while True:
@@ -119,3 +149,16 @@ def get_next_id(data: constant.TYPE_LIST) -> int:
         return max(item["id"] for item in data) + 1
 
     return 1
+
+def ensure_records_exist(data: constant.TYPE_LIST, person: str) -> bool:
+    if not data:
+        print(f"No {person} records found.")
+
+        return False
+    return True
+
+def find_by_id(data: constant.TYPE_LIST, data_id: int) -> constant.TYPE_DICT | None:
+    return next(
+            (each_data for each_data in data if each_data['id'] == data_id), None
+        )
+

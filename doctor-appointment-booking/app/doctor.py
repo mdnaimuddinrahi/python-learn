@@ -70,7 +70,7 @@ def manage_doctor():
 
     while True:
         print(MENU_DOCTOR_MANAGE_OPTIONS)
-        choice = helper.valid_option_input("Choose an option: ", name="Option", max_value=6)                
+        choice = helper.valid_option_input("Choose an option: ", name="Option", max_value=6)
 
         if choice == DOCTOR_MENU_ADD:
             add_doctor()
@@ -115,7 +115,7 @@ def add_doctor():
 def view_doctor():
     data = load_data(constant.TABLE_DOCTOR)
 
-    if not ensure_doctor_records_exist(data):
+    if not helper.ensure_records_exist(data, 'doctor'):
         return
     while True:
         doctor_id = helper.valid_input(
@@ -123,7 +123,7 @@ def view_doctor():
             name="Doctor",
             type="int"
         )
-        doctor = find_by_doctor_id(data, doctor_id)
+        doctor = helper.find_by_id(data, doctor_id)
         display_doctor_if_found(doctor, doctor_id)
 
         search_again = helper.confirm_input(
@@ -135,7 +135,7 @@ def view_doctor():
 
 def doctor_list() -> None:
     data = load_data(constant.TABLE_DOCTOR)
-    if not ensure_doctor_records_exist(data):
+    if not helper.ensure_records_exist(data, 'doctor'):
         return
 
     while True:
@@ -186,7 +186,7 @@ def doctor_list() -> None:
         else:
             print("Invalid option, please try again.")
 
-        if not ensure_doctor_records_exist(filter_data):
+        if not helper.ensure_records_exist(filter_data, 'doctor'):
             continue
 
         helper.print_divider(divider="*", color=constant.COLOR_YELLOW)
@@ -195,13 +195,6 @@ def doctor_list() -> None:
         for doctor in filter_data:
             display_doctor_if_found(doctor, doctor[COLUMN_ID])
 
-
-def ensure_doctor_records_exist(data: constant.TYPE_LIST) -> bool:
-    if not data:
-        print("No doctor records found.")
-
-        return False
-    return True
 
 def update_doctor() -> None:
     data = load_data(constant.TABLE_DOCTOR)
@@ -212,7 +205,7 @@ def update_doctor() -> None:
             name="Doctor",
             type="int"
         )
-        doctor = find_by_doctor_id(data, doctor_id)
+        doctor = helper.find_by_id(data, doctor_id)
         display_doctor_if_found(doctor, doctor_id)
 
         if doctor is None:
@@ -282,7 +275,7 @@ def doctor_status() -> None:
             name="Doctor",
             type="int"
         )
-        doctor = find_by_doctor_id(data, doctor_id)
+        doctor = helper.find_by_id(data, doctor_id)
         display_doctor_if_found(doctor, doctor_id)
 
         if doctor is None:
@@ -331,9 +324,3 @@ def display_doctor_if_found(doctor: constant.TYPE_DICT | None, doctor_id: int) -
         print(f"{'Updated At':<{LABEL_WIDTH}}: {doctor[COLUMN_UPDATED_AT]}")
     
         print()
-                
-def find_by_doctor_id(data: constant.TYPE_LIST, doctor_id: int) -> constant.TYPE_DICT | None:
-    return next(
-            (doctor for doctor in data if doctor[COLUMN_ID] == doctor_id), None
-        )
-
