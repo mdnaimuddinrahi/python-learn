@@ -6,7 +6,19 @@
         "created_at": "2026-08-17 08:31:40",
         "updated_at": "-",
         "phone": "0199303423",
-        "status": "Active"
+        "status": "Active",
+        "schedule": [
+            {
+                "id": 1,
+                "day": "Saturday",
+                "start_time": "12:32",
+                "end_time": "6:22",
+                "slot_duration": 90,
+                "status": "Available",
+                "created_at": "2026-08-23 19:30:09",
+                "updated_at": "-"
+            }
+        ]
     },
     {
         "id": 2,
@@ -15,7 +27,49 @@
         "created_at": "2026-08-17 08:32:18",
         "updated_at": "-",
         "phone": "0199892345",
-        "status": "In-Active"
+        "status": "In-Active",
+        "schedule": [
+            {
+                "id": 2,
+                "day": "Sunday",
+                "start_time": "09:00",
+                "end_time": "12:00",
+                "slot_duration": 30,
+                "status": "Blocked",
+                "created_at": "2026-08-23 19:32:10",
+                "updated_at": "2026-08-23 20:04:04"
+            },
+            {
+                "id": 3,
+                "day": "Monday",
+                "start_time": "13:00",
+                "end_time": "16:00",
+                "slot_duration": 30,
+                "status": "Blocked",
+                "created_at": "2026-08-23 19:33:15",
+                "updated_at": "-"
+            },
+            {
+                "id": 4,
+                "day": "Tuesday",
+                "start_time": "10:00",
+                "end_time": "12:30",
+                "slot_duration": 25,
+                "status": "Available",
+                "created_at": "2026-08-23 19:34:20",
+                "updated_at": "-"
+            },
+            {
+                "id": 6,
+                "day": "Friday",
+                "start_time": "14:00",
+                "end_time": "17:00",
+                "slot_duration": 30,
+                "status": "Available",
+                "created_at": "2026-08-23 19:36:30",
+                "updated_at": "-"
+            }
+        ]
     },
     {
         "id": 3,
@@ -24,7 +78,69 @@
         "created_at": "2026-08-17 08:32:48",
         "updated_at": "-",
         "phone": "0133902343",
-        "status": "On-Leave"
+        "status": "On-Leave",
+        "schedule": [
+            {
+                "id": 7,
+                "day": "Monday",
+                "start_time": "09:00",
+                "end_time": "12:00",
+                "slot_duration": 30,
+                "status": "Blocked",
+                "created_at": "2026-08-23 19:38:00",
+                "updated_at": "-"
+            },
+            {
+                "id": 8,
+                "day": "Tuesday",
+                "start_time": "09:00",
+                "end_time": "12:00",
+                "slot_duration": 30,
+                "status": "Blocked",
+                "created_at": "2026-08-23 19:39:05",
+                "updated_at": "-"
+            },
+            {
+                "id": 9,
+                "day": "Wednesday",
+                "start_time": "13:00",
+                "end_time": "16:00",
+                "slot_duration": 30,
+                "status": "Blocked",
+                "created_at": "2026-08-23 19:40:10",
+                "updated_at": "-"
+            },
+            {
+                "id": 10,
+                "day": "Thursday",
+                "start_time": "10:00",
+                "end_time": "13:00",
+                "slot_duration": 30,
+                "status": "Blocked",
+                "created_at": "2026-08-23 19:41:15",
+                "updated_at": "-"
+            },
+            {
+                "id": 11,
+                "day": "Friday",
+                "start_time": "09:00",
+                "end_time": "11:00",
+                "slot_duration": 20,
+                "status": "Blocked",
+                "created_at": "2026-08-23 19:42:20",
+                "updated_at": "-"
+            },
+            {
+                "id": 12,
+                "day": "Saturday",
+                "start_time": "10:00",
+                "end_time": "13:00",
+                "slot_duration": 30,
+                "status": "Blocked",
+                "created_at": "2026-08-23 19:43:25",
+                "updated_at": "-"
+            }
+        ]
     },
     {
         "id": 4,
@@ -33,7 +149,59 @@
         "created_at": "2026-08-17 08:33:22",
         "updated_at": "-",
         "phone": "0133540344",
-        "status": "On-Leave"
+        "status": "On-Leave",
+        "schedule": [
+            {
+                "id": 13,
+                "day": "Sunday",
+                "start_time": "10:00",
+                "end_time": "13:00",
+                "slot_duration": 30,
+                "status": "Blocked",
+                "created_at": "2026-08-23 19:45:00",
+                "updated_at": "-"
+            },
+            {
+                "id": 14,
+                "day": "Monday",
+                "start_time": "14:00",
+                "end_time": "17:00",
+                "slot_duration": 30,
+                "status": "Blocked",
+                "created_at": "2026-08-23 19:46:05",
+                "updated_at": "-"
+            },
+            {
+                "id": 15,
+                "day": "Tuesday",
+                "start_time": "09:00",
+                "end_time": "11:00",
+                "slot_duration": 20,
+                "status": "Blocked",
+                "created_at": "2026-08-23 19:47:10",
+                "updated_at": "-"
+            },
+            {
+                "id": 16,
+                "day": "Thursday",
+                "start_time": "12:00",
+                "end_time": "15:00",
+                "slot_duration": 30,
+                "status": "Blocked",
+                "created_at": "2026-08-23 19:48:15",
+                "updated_at": "-"
+            },
+            {
+                "id": 17,
+                "day": "Saturday",
+                "start_time": "09:00",
+                "end_time": "12:00",
+                "slot_duration": 30,
+                "status": "Blocked",
+                "created_at": "2026-08-23 19:49:20",
+                "updated_at": "-"
+            }
+        ]
     },
     {
         "id": 5,
@@ -42,6 +210,119 @@
         "created_at": "2026-08-17 08:37:28",
         "updated_at": "-",
         "phone": "0133343234",
-        "status": "Closed"
+        "status": "Closed",
+        "schedule": [
+            {
+                "id": 18,
+                "day": "Monday",
+                "start_time": "09:00",
+                "end_time": "12:00",
+                "slot_duration": 30,
+                "status": "Closed",
+                "created_at": "2026-08-23 19:51:00",
+                "updated_at": "-"
+            },
+            {
+                "id": 19,
+                "day": "Wednesday",
+                "start_time": "13:00",
+                "end_time": "16:00",
+                "slot_duration": 30,
+                "status": "Closed",
+                "created_at": "2026-08-23 19:52:05",
+                "updated_at": "-"
+            },
+            {
+                "id": 20,
+                "day": "Friday",
+                "start_time": "10:00",
+                "end_time": "13:00",
+                "slot_duration": 30,
+                "status": "Closed",
+                "created_at": "2026-08-23 19:53:10",
+                "updated_at": "-"
+            },
+            {
+                "id": 21,
+                "day": "Saturday",
+                "start_time": "09:00",
+                "end_time": "11:00",
+                "slot_duration": 20,
+                "status": "Closed",
+                "created_at": "2026-08-23 19:54:15",
+                "updated_at": "-"
+            },
+            {
+                "id": 22,
+                "day": "Sunday",
+                "start_time": "14:00",
+                "end_time": "17:00",
+                "slot_duration": 30,
+                "status": "Closed",
+                "created_at": "2026-08-23 19:55:20",
+                "updated_at": "-"
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "name": "gammy",
+        "specialization": "Eye Specilized.",
+        "created_at": "2026-08-23 11:48:35",
+        "updated_at": "-",
+        "phone": "0133422343",
+        "status": "In-Active",
+        "schedule": [
+            {
+                "id": 23,
+                "day": "Sunday",
+                "start_time": "09:00",
+                "end_time": "12:00",
+                "slot_duration": 30,
+                "status": "Available",
+                "created_at": "2026-08-23 19:57:00",
+                "updated_at": "-"
+            },
+            {
+                "id": 24,
+                "day": "Monday",
+                "start_time": "13:00",
+                "end_time": "16:00",
+                "slot_duration": 30,
+                "status": "Blocked",
+                "created_at": "2026-08-23 19:58:05",
+                "updated_at": "-"
+            },
+            {
+                "id": 25,
+                "day": "Wednesday",
+                "start_time": "09:00",
+                "end_time": "11:00",
+                "slot_duration": 20,
+                "status": "Blocked",
+                "created_at": "2026-08-23 19:59:10",
+                "updated_at": "-"
+            },
+            {
+                "id": 26,
+                "day": "Friday",
+                "start_time": "14:00",
+                "end_time": "17:00",
+                "slot_duration": 30,
+                "status": "Available",
+                "created_at": "2026-08-23 20:00:15",
+                "updated_at": "-"
+            },
+            {
+                "id": 27,
+                "day": "Saturday",
+                "start_time": "09:00",
+                "end_time": "12:00",
+                "slot_duration": 30,
+                "status": "Available",
+                "created_at": "2026-08-23 20:01:20",
+                "updated_at": "-"
+            }
+        ]
     }
 ]

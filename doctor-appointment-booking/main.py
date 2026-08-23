@@ -2,6 +2,7 @@ import app.constant as constant
 from app.helper import valid_option_input, print_title
 from app.doctor import manage_doctor
 from app.patient import manage_patient
+from app.schedule import manage_schedule
 
 def main() -> None:
     print_title("DOCTOR APPOINTMENT MANAGEMENT")   
@@ -14,10 +15,9 @@ def main() -> None:
         elif choice == constant.MENU_MANAGE_PATIENT:
             # patient.add_patient()
             manage_patient()
-            pass
         elif choice == constant.MENU_MANAGE_DOCTOR_SCHEDULE:
             # schedule.generate_slots()
-            pass
+            manage_schedule()
         elif choice == constant.MENU_CHECK_AVAILABILITY:
             # schedule.check_availability()
             pass

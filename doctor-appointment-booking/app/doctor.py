@@ -9,6 +9,7 @@ COLUMN_NAME="name"
 COLUMN_SPECIALIZATION="specialization"
 COLUMN_PHONE="phone"
 COLUMN_STATUS="status"
+COLUMN_SCHEDULE="schedule"
 COLUMN_CREATED_AT="created_at"
 COLUMN_UPDATED_AT="updated_at"
 STATUS_OPTION = {
@@ -17,13 +18,6 @@ STATUS_OPTION = {
     3 : "On-Leave",
     4 : "Closed",
 }
-STATUS_OPTION_PREVIEW = """
-1. Active.
-2. In-Active.
-3. On-Leave.
-4. Closed
-"""
-TOTAL_STATUS = 4
 
 LABEL_WIDTH = max(
     len("Doctor ID"),
@@ -34,23 +28,22 @@ LABEL_WIDTH = max(
     len("Updated At"),
 ) + 2
 
-MENU_DOCTOR_MANAGE_OPTIONS = """
-1. Add Doctor
-2. View Doctor
-3. Doctor List
-4. Update Doctor
-5. Doctor Status
-6. Back
-"""
+DOCTOR_MENU_ADD = 1
+DOCTOR_MENU_VIEW = 2
+DOCTOR_MENU_LIST = 3 
+DOCTOR_MENU_UPDATE = 4
+DOCTOR_MENU_STATUS = 5
+DOCTOR_MENU_BACK = 6
 
-MENU_DOCTOR_LIST_OPTIONS = """
-1. All List.
-2. Search By Name.
-3. Search By Specialize.
-4. Search By Status.
-5. Search By Phone.
-6. Back to Doctors Menu.
-"""
+MENU_DOCTOR_MANAGE_OPTIONS = {
+    DOCTOR_MENU_ADD: "Add Doctor",
+    DOCTOR_MENU_VIEW: "View Doctor",
+    DOCTOR_MENU_LIST: "Doctor List",
+    DOCTOR_MENU_UPDATE: "Update Doctor",
+    DOCTOR_MENU_STATUS: "Doctor Status",
+    DOCTOR_MENU_BACK: "Back",
+}
+
 DOCTOR_LIST_ALL = 1
 DOCTOR_LIST_BY_NAME = 2
 DOCTOR_LIST_BY_SPECIALIZE = 3
@@ -58,19 +51,21 @@ DOCTOR_LIST_BY_STATUS = 4
 DOCTOR_LIST_BY_PHONE = 5
 DOCTOR_LIST_BACK = 6
 
-DOCTOR_MENU_ADD = 1
-DOCTOR_MENU_VIEW = 2
-DOCTOR_MENU_LIST = 3
-DOCTOR_MENU_UPDATE = 4
-DOCTOR_MENU_STATUS = 5
-DOCTOR_MENU_BACK = 6
+MENU_DOCTOR_LIST_OPTIONS = {
+    DOCTOR_LIST_ALL : "All List.",
+    DOCTOR_LIST_BY_NAME : "Search By Name.",
+    DOCTOR_LIST_BY_SPECIALIZE : "Search By Specialize.",
+    DOCTOR_LIST_BY_STATUS : "Search By Status.",
+    DOCTOR_LIST_BY_PHONE : "Search By Phone.",
+    DOCTOR_LIST_BACK : "Back to Doctors Menu.",
+}
 
 def manage_doctor():
     helper.print_title("Doctor Management")
 
     while True:
-        print(MENU_DOCTOR_MANAGE_OPTIONS)
-        choice = helper.valid_option_input("Choose an option: ", name="Option", max_value=6)
+        helper.display_menu(MENU_DOCTOR_MANAGE_OPTIONS)
+        choice = helper.valid_option_input("Choose an option: ", name="Option", max_value=len(MENU_DOCTOR_MANAGE_OPTIONS))
 
         if choice == DOCTOR_MENU_ADD:
             add_doctor()
@@ -87,7 +82,7 @@ def manage_doctor():
         else:
             print("Invalid option, please try again.")
 
-def add_doctor():
+def add_doctor() -> None:
     print('Please enter doctor details')
     data = load_data(constant.TABLE_DOCTOR)
     current_date_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -106,13 +101,14 @@ def add_doctor():
                 type="phone")
     doctor[COLUMN_PHONE] = phone or "-"            
     print("Choose an option:")
-    print(STATUS_OPTION_PREVIEW)
-    status = helper.valid_option_input("Enter Status:", "Status", TOTAL_STATUS)
+    helper.display_menu(STATUS_OPTION)
+    status = helper.valid_option_input("Enter Status:", "Status", len(STATUS_OPTION))
     doctor[COLUMN_STATUS] = STATUS_OPTION[status]
+    doctor[COLUMN_SCHEDULE] = list()
     data.append(doctor)
     save_doctor_record(constant.ACTION_CREATE, data, doctor)
 
-def view_doctor():
+def view_doctor() -> None:
     data = load_data(constant.TABLE_DOCTOR)
 
     if not helper.ensure_records_exist(data, 'doctor'):
@@ -139,8 +135,8 @@ def doctor_list() -> None:
         return
 
     while True:
-        print(MENU_DOCTOR_LIST_OPTIONS)
-        choice = helper.valid_option_input("Choose an option: ", name="Option", max_value=6)                
+        helper.display_menu(MENU_DOCTOR_LIST_OPTIONS)
+        choice = helper.valid_option_input("Choose an option: ", name="Option", max_value=len(MENU_DOCTOR_LIST_OPTIONS))                
 
         if choice == DOCTOR_LIST_ALL:
             filter_data = data
@@ -175,8 +171,8 @@ def doctor_list() -> None:
             ]
         elif choice == DOCTOR_LIST_BY_STATUS:
             print("Choose an option:")
-            print(STATUS_OPTION_PREVIEW)
-            status = helper.valid_option_input("Enter Status:", "Status", TOTAL_STATUS)
+            helper.display_menu(STATUS_OPTION)
+            status = helper.valid_option_input("Enter Status:", "Status", len(STATUS_OPTION))
             filter_data = [
                 doctor for doctor in data
                 if STATUS_OPTION[status] == doctor[COLUMN_STATUS]
@@ -198,6 +194,9 @@ def doctor_list() -> None:
 
 def update_doctor() -> None:
     data = load_data(constant.TABLE_DOCTOR)
+    
+    if not helper.ensure_records_exist(data, 'doctor'):
+        return
 
     while True:
         doctor_id = helper.valid_input(
@@ -248,8 +247,9 @@ def update_doctor() -> None:
 
         if should_update_status == constant.CONFIRM_YES:
             print("Choose an option:")
-            print(STATUS_OPTION_PREVIEW)
-            status = helper.valid_option_input("Enter Status:", "Status", TOTAL_STATUS)
+            # print(STATUS_OPTION_PREVIEW)
+            helper.display_menu(STATUS_OPTION)
+            status = helper.valid_option_input("Enter Status:", "Status", len(STATUS_OPTION))
             doctor[COLUMN_STATUS] = STATUS_OPTION[status]
             is_updated = True
 
@@ -293,8 +293,9 @@ def doctor_status() -> None:
 
             if should_update_status == constant.CONFIRM_YES: 
                 print("Choose an option:")
-                print(STATUS_OPTION_PREVIEW)
-                status = helper.valid_option_input("Enter Status:", "Status", TOTAL_STATUS)
+                # print(STATUS_OPTION_PREVIEW)
+                helper.display_menu(STATUS_OPTION)
+                status = helper.valid_option_input("Enter Status:", "Status", len(STATUS_OPTION))
                 doctor[COLUMN_STATUS] = STATUS_OPTION[status]
                 save_doctor_record(constant.ACTION_UPDATE, data, doctor)
         return
@@ -308,7 +309,7 @@ def save_doctor_record(action: str, data: constant.TYPE_LIST, doctor: constant.T
     print(f"\nDoctor {action} successfully.")
     display_doctor_if_found(doctor, doctor_id=doctor[COLUMN_ID])
 
-def display_doctor_if_found(doctor: constant.TYPE_DICT | None, doctor_id: int) -> None:
+def display_doctor_if_found(doctor: constant.TYPE_DICT | None, doctor_id: int, visible_schedule: bool = False) -> None:
     if doctor is None:
         helper.print_divider(color=constant.COLOR_RED)
         print(f'Doctor Not found with ID {doctor_id}\n')
@@ -322,5 +323,21 @@ def display_doctor_if_found(doctor: constant.TYPE_DICT | None, doctor_id: int) -
         print(f"{'Status':<{LABEL_WIDTH}}: {doctor[COLUMN_STATUS]}")
         print(f"{'Created At':<{LABEL_WIDTH}}: {doctor[COLUMN_CREATED_AT]}")
         print(f"{'Updated At':<{LABEL_WIDTH}}: {doctor[COLUMN_UPDATED_AT]}")
-    
         print()
+         
+        if visible_schedule:
+            helper.print_divider(color=constant.COLOR_GREEN)
+            print("Schedule")
+
+            schedules = doctor.get("schedule", [])
+
+            if not schedules:
+                print("No schedule found.")
+            else:
+                for schedule in schedules:
+                    print(f"{'Day':<{LABEL_WIDTH}}: {schedule['day']}")
+                    print(f"{'Start Time':<{LABEL_WIDTH}}: {schedule['start_time']}")
+                    print(f"{'End Time':<{LABEL_WIDTH}}: {schedule['end_time']}")
+                    print(f"{'Slot Duration':<{LABEL_WIDTH}}: {schedule['slot_duration']} minutes")
+                    print()
+        

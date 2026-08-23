@@ -162,3 +162,18 @@ def find_by_id(data: constant.TYPE_LIST, data_id: int) -> constant.TYPE_DICT | N
             (each_data for each_data in data if each_data['id'] == data_id), None
         )
 
+
+def display_menu(options: dict[int, str]) -> None:
+    for key, value in options.items():
+        print(f"{key}. {value}")
+
+
+def valid_time_input(placeholder: str, name: str) -> str:
+    while True:
+        value = input(placeholder).strip()
+
+        try:
+            datetime.strptime(value, "%H:%M")
+            return value
+        except ValueError:
+            print(f"Invalid {name}. Please use HH:MM format.")
