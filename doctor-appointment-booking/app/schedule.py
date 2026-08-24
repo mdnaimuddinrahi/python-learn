@@ -30,9 +30,12 @@ COLUMN_STATUS = "status"
 COLUMN_CREATED_AT = "created_at"
 COLUMN_UPDATED_AT = "updated_at"
 
+STATUS_AVAILABLE = 1
+STATUS_BLOCKED = 2
+
 SCHEDULE_STATUSES = {
-    1: "Available",
-    2: "Blocked",
+    STATUS_AVAILABLE: "Available",
+    STATUS_BLOCKED: "Blocked",
 }
 
 DAYS_OF_WEEK = {

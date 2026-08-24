@@ -3,31 +3,15 @@ MENU_OPTIONS = """
 1. Doctor Management
 2. Patient Management
 3. Manage Doctor Schedule
-4. Check Availability
-5. Create Appointment
-6. View Appointment
-7. List Appointments
-8. Search Appointments
-9. Cancel Appointment
-10. Block Time Slot
-11. Unblock Time Slot
-12. Daily Schedule
-13. Exit
+4. Manage Appointment
+5. Exit
 """
 
 MENU_MANAGE_DOCTOR = 1
 MENU_MANAGE_PATIENT = 2
 MENU_MANAGE_DOCTOR_SCHEDULE = 3
-MENU_CHECK_AVAILABILITY = 4
-MENU_CREATE_APPOINTMENT = 5
-MENU_VIEW_APPOINTMENT = 6
-MENU_LIST_APPOINTMENTS = 7
-MENU_SEARCH_APPOINTMENTS = 8
-MENU_CANCEL_APPOINTMENT = 9
-MENU_BLOCK_TIME_SLOT = 10
-MENU_UNBLOCK_TIME_SLOT = 11
-MENU_DAILY_SCHEDULE = 12
-MENU_EXIT = 13
+MENU_MANAGE_APPOINTMENT = 4
+MENU_EXIT = 5
 
 
 DEFAULT_LIMIT = 50

@@ -340,4 +340,28 @@ def display_doctor_if_found(doctor: constant.TYPE_DICT | None, doctor_id: int, v
                     print(f"{'End Time':<{LABEL_WIDTH}}: {schedule['end_time']}")
                     print(f"{'Slot Duration':<{LABEL_WIDTH}}: {schedule['slot_duration']} minutes")
                     print()
-        
+             
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
